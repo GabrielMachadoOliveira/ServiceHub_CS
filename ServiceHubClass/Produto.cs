@@ -15,25 +15,15 @@ namespace ServiceHubClass
         // Propiedades
 
         public int Id { get; set; }
-
         public string? CodBarras { get; set; }
-
         public string? Descricao { get; set; }
-
         public double ValorUnit { get; set; }
-
         public string? UnidadeVenda { get; set; }
-
         public Categoria? Categoria { get; set; }
-
         public double EstoqueMinimo { get; set; }
-
         public double ClasseDesconto { get; set; }
-
-        public byte[] Imagem { get; set; }
-
+        public byte[]? Imagem { get; set; }
         public DateTime DataCad { get; set; }
-
         public bool Descontinuado { get; set; }
 
         // Métodos Construtores
@@ -44,80 +34,40 @@ namespace ServiceHubClass
 
         }
 
-        public Produto(string? codBarras, string? descricao, double valorUnit, string? unidadeVenda,
-
-            Categoria? categoria, double estoqueMinimo, double classeDesconto)
-
+        public Produto(string? codBarras, string? descricao, double valorUnit, string? unidadeVenda, Categoria? categoria, double estoqueMinimo, double classeDesconto)
         {
-
             CodBarras = codBarras;
-
             Descricao = descricao;
-
             ValorUnit = valorUnit;
-
             UnidadeVenda = unidadeVenda;
-
             Categoria = categoria;
-
             EstoqueMinimo = estoqueMinimo;
-
             ClasseDesconto = classeDesconto;
-
         }
-
-        public Produto(int id, string? codBarras, string? descricao, double valorUnit, string? unidadeVenda,
-
-            Categoria? categoria, double estoqueMinimo, double classeDesconto)
-
+        public Produto(int id, string? codBarras, string? descricao, double valorUnit, string? unidadeVenda, Categoria? categoria, double estoqueMinimo, double classeDesconto)
         {
-
             Id = id;
-
             CodBarras = codBarras;
-
             Descricao = descricao;
-
             ValorUnit = valorUnit;
-
             UnidadeVenda = unidadeVenda;
-
             Categoria = categoria;
-
             EstoqueMinimo = estoqueMinimo;
-
             ClasseDesconto = classeDesconto;
-
         }
-
-        public Produto(int id, string? codBarras, string? descricao, double valorUnit, string? unidadeVenda,
-
-            Categoria? categoria, double estoqueMinimo, double classeDesconto, byte[] imagem, DateTime dataCad, bool descontinuado)
-
+        public Produto(int id, string? codBarras, string? descricao, double valorUnit, string? unidadeVenda, Categoria? categoria, double estoqueMinimo, double classeDesconto, byte[] imagem, DateTime dataCad, bool descontinuado)
         {
-
             Id = id;
-
             CodBarras = codBarras;
-
             Descricao = descricao;
-
             ValorUnit = valorUnit;
-
             UnidadeVenda = unidadeVenda;
-
             Categoria = categoria;
-
             EstoqueMinimo = estoqueMinimo;
-
             ClasseDesconto = classeDesconto;
-
             Imagem = imagem;
-
             DataCad = dataCad;
-
             Descontinuado = descontinuado;
-
         }
 
         // Métodos (Inserir, BuscarPorId, ObterLista(texte = ""), Atualizar)
@@ -205,7 +155,7 @@ namespace ServiceHubClass
                     Categoria.ObterPorId(dr.GetInt32(5)),
                     dr.GetDouble(6),
                     dr.GetDouble(7),
-                    (byte[])dr.GetValue(8),
+                    dr.IsDBNull(8) ? null : (byte[])dr.GetValue(8),
                     dr.GetDateTime(9),
                     dr.GetBoolean(10)
                 ));

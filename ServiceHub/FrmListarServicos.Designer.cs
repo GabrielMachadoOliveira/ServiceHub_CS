@@ -119,7 +119,7 @@
             Column2.HeaderText = "Column2";
             Column2.Name = "Column2";
             // 
-            // FrmListarServiços
+            // FrmListarServicos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -132,8 +132,9 @@
             Controls.Add(comboBox1);
             Controls.Add(label2);
             Controls.Add(label1);
-            Name = "FrmListarServiços";
+            Name = "FrmListarServicos";
             Text = "FrmServiços";
+            Load += FrmListarServicos_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

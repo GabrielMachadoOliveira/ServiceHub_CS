@@ -16,5 +16,10 @@ namespace ServiceHub
         {
             InitializeComponent();
         }
+
+        private void FrmListarServicos_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

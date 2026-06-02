@@ -65,11 +65,17 @@ namespace ServiceHub
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            Categoria cat = new Categoria(int.Parse(txtId.Text), txtNome.Text, txtSigla.Text);
+            if (cat.Atualizar())
+            {
+
             txtId.Clear();
             txtNome.Clear();
             txtSigla.Clear();
             CarregaGrid();
-            MessageBox.Show($"Categoria {Categoria.Id} alterada com sucesso!")
+            MessageBox.Show($"Categoria {cat.Id} alterada com sucesso!");
+
+            }
         }
     }
 }

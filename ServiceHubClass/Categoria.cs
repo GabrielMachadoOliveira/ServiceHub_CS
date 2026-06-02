@@ -30,6 +30,11 @@ namespace ServiceHubClass
             Id = 0;
         }
 
+        public Categoria(int id)
+        {
+            Id = id;
+        }
+
         public Categoria(string? nome, string? sigla)
         {
             Nome = nome;
@@ -45,42 +50,32 @@ namespace ServiceHubClass
 
         // Métodos (Funcionalidades RFs) - inserir, atualizar, listar, obterPorId(id), excluir(id)
 
+        // Métodos (Funcionalidades RFs)  - inserir, atualizar, ObterLista, obterPorId(id), excluir(id)
         public void Inserir()
         {
-            
-            var cmd = Banco.Abrir(); // Abre a conexão com o banco de dados
-            if (cmd.Connection.State == ConnectionState.Open) // Verifica se a conexão foi aberta com sucesso antes de prosseguir
+            var cmd = Banco.Abrir();
+            if (cmd.Connection.State == ConnectionState.Open)
             {
-                cmd.CommandType = CommandType.StoredProcedure; // Define que o comando executado será uma Stored Procedure (Procedimento Armazenado)
-                cmd.CommandText = "sp_categoria_insert"; // Especifica o nome da Stored Procedure que está no banco de dados
-                // Passa as propriedades da classe (Nome e Sigla) como parâmetros para a Procedure
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_categoria_insert";
                 cmd.Parameters.AddWithValue("spnome", Nome);
                 cmd.Parameters.AddWithValue("spsigla", Sigla);
-                Id = Convert.ToInt32(cmd.ExecuteScalar()); // Executa a Procedure no banco e converte o retorno para salvar no ID da categoria
+                Id = Convert.ToInt32(cmd.ExecuteScalar());
                 cmd.Connection.Close();
             }
         }
 
         public static Categoria ObterPorId(int id)
         {
-            // ALERTA: Instanciação desnecessária. Se o ID não existir, você gastou memória à toa.
-            // O ideal é iniciar como: Categoria cat = null;
             Categoria cat = new();
             var cmd = Banco.Abrir();
             cmd.CommandType = CommandType.Text;
-            // CRÍTICO (SQL INJECTION): Nunca use interpolação ($"") ou concatenação para passar parâmetros no SQL.
-            // Embora 'id' seja int, isso é uma má prática perigosa. Use Command.Parameters.AddWithValue().
-            // MELHORIA: Evite "SELECT *". Defina explicitamente as colunas que precisa (ex: SELECT id, nome...).
             cmd.CommandText = $"select * from categorias where id = {id}";
             var dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-                
                 cat = new(dr.GetInt32(0), dr.GetString(1), dr.GetString(2));
             }
-            // RISCO DE VAZAMENTO (Memory Leak): Se ocorrer um erro no banco antes de chegar aqui,
-            // o código trava, o .Close() nunca é executado e a conexão fica "presa" aberta no banco.
-            // RESOLUÇÃO: Envolva o comando e o reader em um bloco 'using'.
             dr.Close();
             cmd.Connection.Close();
             return cat;
@@ -89,34 +84,35 @@ namespace ServiceHubClass
         public static List<Categoria> ObterLista(string busca = "")
         {
             List<Categoria> categorias = new List<Categoria>();
-            var cmd = Banco.Abrir();  // Abre a conexâo com o Banco de dados
-            //if (cmd.Connection.State == ConnectionState.Open) // Validar se a conexão realmente abriu antes de prosseguir.
-            //{
-                if (busca!= "")
+            var cmd = Banco.Abrir();
+            if (cmd.Connection.State == ConnectionState.Open)
+            {
+                if (busca != "")
                 {
-                    cmd.CommandText = $"Select * from categorias" + "where nome like '%"+busca+"%' order by nome";
+                    cmd.CommandText = $"Select * from categorias where nome like '%" + busca + "%'" +
+                        "order by nome";
                 }
                 else
                 {
-                    cmd.CommandText = "select * from categorias order by nome";
+                    cmd.CommandText = "Select * from categorias order by nome";
                 }
                 cmd.CommandType = CommandType.Text;
-                
+
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    categorias.Add(new(dr.GetInt32(0),dr.GetString(1),dr.GetString(2)??""));
+                    categorias.Add(new(dr.GetInt32(0), dr.GetString(1), dr.GetString(2)));
                 }
                 dr.Close();
                 cmd.Connection.Close();
-           // }
+            }
             return categorias;
         }
-       
+
 
         public bool Atualizar()
         {
-            // como este método não é estático, precisamos considerar
+            // como este método não é estático, precisamos considerar 
             // que as propriedades já possuam valores atribuídos antes de chamá-lo
             bool atualizada = false;
             if (Id < 1) return atualizada;
@@ -131,13 +127,13 @@ namespace ServiceHubClass
             return atualizada;
         }
 
-        public void Excluir(int id)
+        public void Excluir()
         {
             var cmd = Banco.Abrir();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_categoria_delete";
-            cmd.Parameters.AddWithValue("spid", id);
-            cmd.ExecuteNonQuery(); // Retorna o numero de linhas afetadas
+            cmd.Parameters.AddWithValue("spid", Id);
+            cmd.ExecuteNonQuery();
             cmd.Connection.Close();
         }
 
