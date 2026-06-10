@@ -33,7 +33,7 @@
             btnExcluir = new Button();
             btnPesquisar = new Button();
             btnEditar = new Button();
-            btnAdicionar = new Button();
+            btnAdd = new Button();
             txtSigla = new TextBox();
             txtNome = new TextBox();
             txtId = new TextBox();
@@ -65,6 +65,7 @@
             btnCancelar.Text = "&Cancelar";
             btnCancelar.TextImageRelation = TextImageRelation.ImageAboveText;
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // btnExcluir
             // 
@@ -83,6 +84,7 @@
             btnExcluir.Text = "E&xcluir";
             btnExcluir.TextImageRelation = TextImageRelation.ImageAboveText;
             btnExcluir.UseVisualStyleBackColor = true;
+            btnExcluir.Click += btnExcluir_Click;
             // 
             // btnPesquisar
             // 
@@ -100,6 +102,7 @@
             btnPesquisar.TabIndex = 19;
             btnPesquisar.Text = "&Pesquisar";
             btnPesquisar.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnPesquisar.Click += btnPesquisar_Click;
             // 
             // btnEditar
             // 
@@ -121,24 +124,24 @@
             btnEditar.UseVisualStyleBackColor = true;
             btnEditar.Click += btnEditar_Click;
             // 
-            // btnAdicionar
+            // btnAdd
             // 
-            btnAdicionar.FlatAppearance.BorderSize = 0;
-            btnAdicionar.FlatAppearance.MouseDownBackColor = Color.Red;
-            btnAdicionar.FlatAppearance.MouseOverBackColor = Color.IndianRed;
-            btnAdicionar.FlatStyle = FlatStyle.Flat;
-            btnAdicionar.Font = new Font("Constantia", 11F);
-            btnAdicionar.ForeColor = SystemColors.ActiveCaptionText;
-            btnAdicionar.Image = (Image)resources.GetObject("btnAdicionar.Image");
-            btnAdicionar.Location = new Point(32, 84);
-            btnAdicionar.Margin = new Padding(5);
-            btnAdicionar.Name = "btnAdicionar";
-            btnAdicionar.Size = new Size(97, 87);
-            btnAdicionar.TabIndex = 18;
-            btnAdicionar.Text = "&Adicionar";
-            btnAdicionar.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnAdicionar.UseVisualStyleBackColor = true;
-            btnAdicionar.Click += btnAdicionar_Click;
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.FlatAppearance.MouseDownBackColor = Color.Red;
+            btnAdd.FlatAppearance.MouseOverBackColor = Color.IndianRed;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Constantia", 11F);
+            btnAdd.ForeColor = SystemColors.ActiveCaptionText;
+            btnAdd.Image = (Image)resources.GetObject("btnAdd.Image");
+            btnAdd.Location = new Point(32, 84);
+            btnAdd.Margin = new Padding(5);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(97, 87);
+            btnAdd.TabIndex = 18;
+            btnAdd.Text = "&Adicionar";
+            btnAdd.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdicionar_Click;
             // 
             // txtSigla
             // 
@@ -199,9 +202,9 @@
             txtBuscar.Location = new Point(14, 190);
             txtBuscar.Margin = new Padding(5);
             txtBuscar.Name = "txtBuscar";
+            txtBuscar.PlaceholderText = "Buscar Categoria";
             txtBuscar.Size = new Size(566, 23);
             txtBuscar.TabIndex = 14;
-            txtBuscar.Text = "Buscar Categoria";
             txtBuscar.TextChanged += textBox1_TextChanged;
             // 
             // dgvCategorias
@@ -248,7 +251,7 @@
             Controls.Add(btnExcluir);
             Controls.Add(btnPesquisar);
             Controls.Add(btnEditar);
-            Controls.Add(btnAdicionar);
+            Controls.Add(btnAdd);
             Controls.Add(txtSigla);
             Controls.Add(txtBuscar);
             Controls.Add(txtNome);
@@ -270,7 +273,7 @@
         private Button btnExcluir;
         private Button btnPesquisar;
         private Button btnEditar;
-        private Button btnAdicionar;
+        private Button btnAdd;
         private TextBox txtSigla;
         private TextBox txtNome;
         private TextBox txtId;
